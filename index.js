@@ -12,6 +12,7 @@ app.get('/', (req, res)=>{
     res.status(200).json({message: 'Welcome to the backend!'})
 })
 app.use('/authenticate', require('./routes/authRoutes'))
+app.use('/contact', require('./routes/contact'))
 
 
 app.listen(process.env.PORT||5000, ()=>{

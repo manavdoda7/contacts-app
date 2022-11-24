@@ -2,7 +2,7 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const User = mongoose.model('User');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 router.post('/register', async(req, res)=>{
     console.log('POST /authenticate/register request');
     const {first_name, last_name, email, password} = req.body;
@@ -39,9 +39,9 @@ router.post('/login', async(req, res)=>{
             }
             if(result) {
                 const token = jwt.sign({
-                    email: checkUser.email,
+                    id: checkUser[0]._id,
                 }, process.env.JWT_SECRET)
-                console.log('Auth successful', token);
+                console.log('Auth successful');
                 return res.json({success:true, token})
             }
             console.log('Password mismatch');
