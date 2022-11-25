@@ -1,14 +1,17 @@
 const checkAuth = require('../middlewares/checkAuth')
 const mongoose = require('mongoose')
+const { query } = require('express')
 const Contact = mongoose.model('Contact')
 const router = require('express').Router()
 
 router.get('/', checkAuth, async(req, res)=>{
     console.log('GET /contact request');
     let where = req.query
+    if(where._id) where._id = `${where._id}`
     try {
         console.log(req.userData);
-        let contacts = await Contact.find({user_id: req.userData, ...where})
+        // req.userData = req.userData.toString()
+        let contacts = await Contact.find({user_id: `${req.userData}`, ...where})
         return res.json({success: true, contacts})
     } catch(err) {
         console.log('Error in fetching contacts.', err);
@@ -54,7 +57,7 @@ router.patch('/', checkAuth, async(req, res)=>{
 })
 
 router.delete('/', checkAuth, async(req, res)=>{
-    const _id = req.body
+    const _id = req.query
     console.log('DELETE /contact request');
     try {
         let contact = await Contact.findById(_id);
