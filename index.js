@@ -3,7 +3,7 @@ const app = express()
 var cors = require('cors')
 
 app.use(cors())
-require('./middlewares/dbConnection')
+require('./middlewares/dbconnection')
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
